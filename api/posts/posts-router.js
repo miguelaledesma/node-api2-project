@@ -32,9 +32,11 @@ router.post('/', (req,res) => {
         res.status(400).json({ message: "Please provide title and contents for the post" })
     } else {
         Posts.insert(post)
-        
-        .then(createdPost => {
-            res.status(201).json(createdPost)
+        .then(posts => {
+            Posts.findById(posts.id)
+            .then(createdPost => {
+                res.status(201).json(createdPost)
+            })
         })
         .catch(err => {
             res.status(500).json({ message: "There was an error while saving the post to the database" })
