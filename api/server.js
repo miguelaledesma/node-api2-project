@@ -63,32 +63,11 @@ server.put('/api/posts/:id', (req, res) => {
                 res.status(404).json({ message: "The post with the specified ID does not exist" })
             }
         })
-        // .then(post => {
-        //     if(post){
-        //         res.status(200).json(post)
-        //     }
-        // })
         .catch(err => {
             res.status(500).json({ message: "The post information could not be modified" })
         })
     }
 })
-// server.put('/api/posts/:id', (req, res) => {
-//     const changes = req.body;
-//     const id = req.params.id; 
-//     Posts.update(id, changes)
-//       .then(post => {
-//         if (post) {
-//           res.status(200).json(post);
-//         } else {
-//           res.status(404).json({ message: "The post with the specified ID does not exist" });
-//         }
-//       })
-//       .catch(error => {
-//         console.log(error);
-//         res.status(500).json({ message: "The post information could not be modified" });
-//       });
-//   });
 
   server.delete('/api/posts/:id', (req, res) => {
     Posts.remove(req.params.id)
