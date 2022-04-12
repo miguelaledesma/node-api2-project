@@ -25,11 +25,14 @@ router.get('/:id', (req, res) => {
 }); 
 
 router.post('/', (req,res) => {
-    let posts = req.body
-    if(!posts.title || !posts.contents){
+    let post = req.body
+    let id = req.params.id
+
+    if(!post.title || !post.contents){
         res.status(400).json({ message: "Please provide title and contents for the post" })
     } else {
-        Posts.insert(posts)
+        Posts.insert(post)
+        
         .then(createdPost => {
             res.status(201).json(createdPost)
         })
@@ -65,14 +68,16 @@ router.put('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-    Posts.remove(req.params.id)
+    Posts.findById(req.params.id)
     .then(post => {
         if(!post){
             res.status(404).json({ message: "The post with the specified ID does not exist" })
         } else{
+            Posts.remove(req.params.id)
+            .then(deleted => {
+                res.status(200).json(post)
+            })
             
-            res.json(post)
-            return 
         }
     })
     .catch(err => {
