@@ -26,7 +26,6 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req,res) => {
     let post = req.body
-    let id = req.params.id
 
     if(!post.title || !post.contents){
         res.status(400).json({ message: "Please provide title and contents for the post" })
@@ -87,9 +86,6 @@ router.delete('/:id', (req, res) => {
     })
   })
 
-    // server.get('/api/posts/:id/comments', (req,res) => {
-
-    // })  
    
     router.get('/:id/comments', (req, res) => {
         Posts.findPostComments(req.params.id)
