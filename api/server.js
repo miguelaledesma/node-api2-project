@@ -85,8 +85,24 @@ server.put('/api/posts/:id', (req, res) => {
     })
   })
 
-  
+    // server.get('/api/posts/:id/comments', (req,res) => {
+
+    // })  
    
+    server.get('/api/posts/:id/comments', (req, res) => {
+        Posts.findPostComments(req.params.id)
+          .then(post => {
+            if (post.length > 0) {
+              res.status(200).json(post);
+            } else {
+              res.status(404).json({ message: "The post with the specified ID does not exist" });
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            res.status(500).json({ message: "The comments information could not be retrieved" });
+          });
+      });
 
 
 
